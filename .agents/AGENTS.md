@@ -22,8 +22,9 @@
 ## 🏗️ Project Architecture & Tech Stack
 
 - **Framework**: React 18 + TypeScript + Vite 8
-- **Styling**: Tailwind CSS v4 (`@tailwindcss/vite`) with custom dark mode design system
+- **Styling**: Tailwind CSS v4 (`@tailwindcss/vite`) with custom dark/light mode design system
 - **Routing**: `react-router-dom` v6 (Hub & Spoke URL model)
+- **State Management**: React Context (`ThemeProvider`) with `localStorage` persistence (`devsuite_theme`)
 - **Icons**: `lucide-react`
 - **Utilities**: `sql-formatter`, native browser Web Crypto API (`crypto.subtle`)
 - **Hosting Target**: Cloudflare Pages / Workers Assets (`wrangler.jsonc` with `"not_found_handling": "single-page-application"`)
@@ -42,6 +43,8 @@ Developer_&_Tech_Suite/
 │   ├── _redirects                  # Managed Cloudflare Pages redirect file
 │   └── favicon.svg
 ├── src/
+│   ├── context/
+│   │   └── ThemeContext.tsx        # Light / Dark theme state manager & localStorage sync
 │   ├── components/
 │   │   ├── ads/                    # AdSense AdSlot Components
 │   │   │   ├── AdSlotHeader.tsx    # id="ad-slot-header"
@@ -54,7 +57,7 @@ Developer_&_Tech_Suite/
 │   │   │   ├── CodeBlock.tsx       # Monospace code container
 │   │   │   └── SeoContent.tsx      # Programmatic 700+ word SEO text generator
 │   │   ├── layout/
-│   │   │   ├── Header.tsx          # Logo, search bar, status badges
+│   │   │   ├── Header.tsx          # Logo, search bar, theme toggle, status badges
 │   │   │   ├── Sidebar.tsx         # Tool list navigation & ad slot
 │   │   │   ├── Footer.tsx          # Compliance links & legal disclosures
 │   │   │   └── ToolLayout.tsx      # Standard hub-and-spoke page wrapper
@@ -74,9 +77,9 @@ Developer_&_Tech_Suite/
 │   │   └── ContactPage.tsx         # /contact
 │   ├── data/
 │   │   └── toolsData.ts            # SEO text (700+ words/tool), FAQs, code snippets
-│   ├── App.tsx                     # React Router definition
+│   ├── App.tsx                     # React Router definition wrapped in ThemeProvider
 │   ├── main.tsx                    # Entry point
-│   └── index.css                   # Tailwind v4 import (@import "tailwindcss";)
+│   └── index.css                   # Tailwind v4 import (@import "tailwindcss";) & theme base
 ├── package.json
 ├── vite.config.ts
 ├── wrangler.jsonc                  # Cloudflare Workers/Pages assets SPA configuration
@@ -211,3 +214,16 @@ Ensure build compiles cleanly with zero TypeScript errors.
   1. Created explicit root `wrangler.jsonc` configuring `"assets": { "directory": "./dist", "not_found_handling": "single-page-application" }`.
   2. Removed conflicting `/* /index.html 200` line from `public/_redirects` to let Cloudflare Assets handle SPA routing natively without API errors.
 - **Verification**: `npm run build` compiled cleanly (`✓ built in 312ms`).
+
+---
+
+### Entry 011 - Light & Dark Theme System Implementation
+- **Date**: 2026-08-08
+- **Summary**: Implemented a global Light and Dark theme toggle system with `localStorage` persistence (`devsuite_theme`) and smooth transitions across all pages and tools.
+- **Root Cause & Feature Goal**: Added requested light mode design option alongside existing dark mode design system.
+- **Fix & Feature Applied**:
+  1. Created `src/context/ThemeContext.tsx` providing `theme` ('dark' | 'light') and `toggleTheme()` hook.
+  2. Wrapped `App.tsx` with `<ThemeProvider>`.
+  3. Added Sun/Moon theme toggle button in `Header.tsx`.
+  4. Refactored `index.css`, `ToolLayout.tsx`, `Header.tsx`, `Sidebar.tsx`, `Footer.tsx`, `HomePage.tsx`, all 6 tool components (`JsonFormatter`, `JwtDecoder`, `SqlFormatter`, `RegexTester`, `Base64Encoder`, `FlexGridPlayground`), and policy pages (`PrivacyPolicyPage`, `TermsPage`, `AboutPage`, `ContactPage`) with Tailwind CSS `dark:` variant classes and clean slate-50 light backgrounds.
+- **Verification**: `npm run build` compiled cleanly (`✓ built in 194ms`).

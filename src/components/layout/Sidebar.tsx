@@ -25,10 +25,10 @@ const ICON_MAP: Record<string, React.ReactNode> = {
 export const Sidebar: React.FC = () => {
   return (
     <aside className="w-full lg:w-72 shrink-0 space-y-6">
-      <div className="p-4 rounded-2xl bg-slate-900/80 border border-slate-800 backdrop-blur-md">
-        <div className="flex items-center gap-2 mb-4 pb-3 border-b border-slate-800">
-          <Wrench className="w-4 h-4 text-cyan-400" />
-          <h3 className="text-xs font-bold text-slate-200 tracking-wider uppercase">
+      <div className="p-4 rounded-2xl bg-white/80 dark:bg-slate-900/80 border border-slate-200 dark:border-slate-800 backdrop-blur-md transition-colors">
+        <div className="flex items-center gap-2 mb-4 pb-3 border-b border-slate-200 dark:border-slate-800">
+          <Wrench className="w-4 h-4 text-cyan-600 dark:text-cyan-400" />
+          <h3 className="text-xs font-bold text-slate-800 dark:text-slate-200 tracking-wider uppercase">
             All Developer Tools
           </h3>
         </div>
@@ -41,13 +41,13 @@ export const Sidebar: React.FC = () => {
               className={({ isActive }: { isActive: boolean }) =>
                 `flex items-center justify-between px-3 py-2.5 rounded-xl text-xs font-medium transition-all group ${
                   isActive
-                    ? 'bg-cyan-500/10 text-cyan-300 border border-cyan-500/30 shadow-md shadow-cyan-950/20 font-semibold'
-                    : 'text-slate-400 hover:text-slate-200 hover:bg-slate-800/60 border border-transparent'
+                    ? 'bg-cyan-500/10 text-cyan-700 dark:text-cyan-300 border border-cyan-500/30 shadow-sm font-semibold'
+                    : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800/60 border border-transparent'
                 }`
               }
             >
               <div className="flex items-center gap-2.5 truncate">
-                <span className="text-slate-400 group-hover:text-cyan-400 transition-colors">
+                <span className="text-slate-500 dark:text-slate-400 group-hover:text-cyan-600 dark:group-hover:text-cyan-400 transition-colors">
                   {ICON_MAP[tool.iconName] || <Wrench className="w-4 h-4" />}
                 </span>
                 <span className="truncate">{tool.name.split('&')[0]}</span>

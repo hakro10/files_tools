@@ -17,7 +17,7 @@ export const CodeBlock: React.FC<CodeBlockProps> = ({
       <div className="px-4 py-2 bg-slate-950/80 border-b border-slate-800 flex items-center justify-between">
         <div className="flex items-center gap-2">
           <span className="inline-block w-2.5 h-2.5 rounded-full bg-slate-700"></span>
-          <span className="text-xs font-mono text-slate-400 font-semibold">{title || language}</span>
+          <span className="text-xs font-mono text-slate-300 font-semibold">{title || language}</span>
         </div>
         <CopyButton textToCopy={code} />
       </div>

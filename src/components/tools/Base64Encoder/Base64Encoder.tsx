@@ -3,225 +3,208 @@ import { CopyButton } from '../../common/CopyButton';
 import { ErrorAlert } from '../../common/ErrorAlert';
 import { AdSlotOutput } from '../../ads/AdSlotOutput';
 import {
-  Upload,
+  Binary,
   ArrowRightLeft,
-  FileCode,
-  CheckCircle
+  Upload,
+  Sparkles,
+  Link2
 } from 'lucide-react';
 
-type Mode = 'base64-encode' | 'base64-decode' | 'url-encode' | 'url-decode';
+type Mode = 'encode' | 'decode';
+type TypeVariant = 'base64' | 'url';
 
 export const Base64Encoder: React.FC = () => {
-  const [inputText, setInputText] = useState<string>('DevSuite High-Performance Tools 🚀');
-  const [mode, setMode] = useState<Mode>('base64-encode');
+  const [inputText, setInputText] = useState<string>('Hello DevSuite! 🚀 Privacy-first developer tools running 100% in browser runtime.');
+  const [mode, setMode] = useState<Mode>('encode');
+  const [variant, setVariant] = useState<TypeVariant>('base64');
   const [urlSafe, setUrlSafe] = useState<boolean>(false);
-  const [fileDataUrl, setFileDataUrl] = useState<string | null>(null);
-  const [fileName, setFileName] = useState<string>('');
+  const [filePreview, setFilePreview] = useState<{ name: string; size: number; mime: string; dataUrl: string } | null>(null);
 
   const { outputText, error } = useMemo(() => {
-    if (!inputText) return { outputText: '', error: null };
+    if (!inputText.trim()) return { outputText: '', error: null };
 
     try {
-      if (mode === 'base64-encode') {
-        let encoded = btoa(unescape(encodeURIComponent(inputText)));
-        if (urlSafe) {
-          encoded = encoded.replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
+      if (variant === 'url') {
+        if (mode === 'encode') {
+          return { outputText: encodeURIComponent(inputText), error: null };
+        } else {
+          return { outputText: decodeURIComponent(inputText), error: null };
         }
-        return { outputText: encoded, error: null };
-      }
-
-      if (mode === 'base64-decode') {
-        let str = inputText.trim();
-        if (urlSafe) {
-          str = str.replace(/-/g, '+').replace(/_/g, '/');
-          while (str.length % 4) {
-            str += '=';
+      } else {
+        // Base64 Text Handling with UTF-8 support
+        if (mode === 'encode') {
+          const utf8Bytes = new TextEncoder().encode(inputText);
+          let binary = '';
+          utf8Bytes.forEach((b) => (binary += String.fromCharCode(b)));
+          let b64 = btoa(binary);
+          if (urlSafe) {
+            b64 = b64.replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
           }
+          return { outputText: b64, error: null };
+        } else {
+          let b64 = inputText.trim();
+          if (urlSafe) {
+            b64 = b64.replace(/-/g, '+').replace(/_/g, '/');
+            while (b64.length % 4) b64 += '=';
+          }
+          const binary = atob(b64);
+          const bytes = new Uint8Array(binary.length);
+          for (let i = 0; i < binary.length; i++) {
+            bytes[i] = binary.charCodeAt(i);
+          }
+          const decoded = new TextDecoder().decode(bytes);
+          return { outputText: decoded, error: null };
         }
-        const decoded = decodeURIComponent(escape(atob(str)));
-        return { outputText: decoded, error: null };
       }
-
-      if (mode === 'url-encode') {
-        return { outputText: encodeURIComponent(inputText), error: null };
-      }
-
-      if (mode === 'url-decode') {
-        return { outputText: decodeURIComponent(inputText), error: null };
-      }
-
-      return { outputText: '', error: null };
     } catch (err: any) {
-      return { outputText: '', error: `Encoding Transformation Error: ${err.message}` };
+      return { outputText: '', error: `Base64/URL ${mode} error: ${err.message}` };
     }
-  }, [inputText, mode, urlSafe]);
+  }, [inputText, mode, variant, urlSafe]);
 
   const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
 
-    setFileName(file.name);
     const reader = new FileReader();
     reader.onload = () => {
-      const result = reader.result as string;
-      setFileDataUrl(result);
-      setInputText(result);
-      setMode('base64-encode');
+      const dataUrl = reader.result as string;
+      setFilePreview({
+        name: file.name,
+        size: file.size,
+        mime: file.type || 'application/octet-stream',
+        dataUrl
+      });
+      setInputText(dataUrl);
+      setMode('encode');
     };
     reader.readAsDataURL(file);
   };
 
   return (
     <div className="space-y-6">
-      {/* Mode Toolbar */}
-      <div className="flex flex-wrap items-center justify-between gap-3 p-3 rounded-xl bg-slate-950/80 border border-slate-800">
-        <div className="flex items-center gap-1 bg-slate-900 p-1 rounded-lg border border-slate-800 flex-wrap">
-          <button
-            onClick={() => setMode('base64-encode')}
-            className={`px-3 py-1 rounded-md text-xs font-medium transition ${
-              mode === 'base64-encode'
-                ? 'bg-cyan-500 text-slate-950 font-bold'
-                : 'text-slate-400 hover:text-slate-200'
-            }`}
-          >
-            Base64 Encode
-          </button>
-          <button
-            onClick={() => setMode('base64-decode')}
-            className={`px-3 py-1 rounded-md text-xs font-medium transition ${
-              mode === 'base64-decode'
-                ? 'bg-cyan-500 text-slate-950 font-bold'
-                : 'text-slate-400 hover:text-slate-200'
-            }`}
-          >
-            Base64 Decode
-          </button>
-          <button
-            onClick={() => setMode('url-encode')}
-            className={`px-3 py-1 rounded-md text-xs font-medium transition ${
-              mode === 'url-encode'
-                ? 'bg-cyan-500 text-slate-950 font-bold'
-                : 'text-slate-400 hover:text-slate-200'
-            }`}
-          >
-            URL Encode
-          </button>
-          <button
-            onClick={() => setMode('url-decode')}
-            className={`px-3 py-1 rounded-md text-xs font-medium transition ${
-              mode === 'url-decode'
-                ? 'bg-cyan-500 text-slate-950 font-bold'
-                : 'text-slate-400 hover:text-slate-200'
-            }`}
-          >
-            URL Decode
-          </button>
+      {/* Top Toolbar */}
+      <div className="flex flex-wrap items-center justify-between gap-3 p-3.5 rounded-xl bg-slate-100 dark:bg-slate-950/80 border border-slate-200 dark:border-slate-800 transition-colors">
+        {/* Encoding Variant Switcher */}
+        <div className="flex items-center gap-2">
+          <div className="flex items-center gap-1 bg-slate-200 dark:bg-slate-900 p-1 rounded-lg border border-slate-300 dark:border-slate-800">
+            <button
+              onClick={() => setVariant('base64')}
+              className={`px-3 py-1 rounded-md text-xs font-medium transition ${
+                variant === 'base64'
+                  ? 'bg-amber-500 text-slate-950 font-bold shadow-sm'
+                  : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200'
+              }`}
+            >
+              Base64 Format
+            </button>
+            <button
+              onClick={() => setVariant('url')}
+              className={`px-3 py-1 rounded-md text-xs font-medium transition ${
+                variant === 'url'
+                  ? 'bg-amber-500 text-slate-950 font-bold shadow-sm'
+                  : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200'
+              }`}
+            >
+              URL Percent-Encoding
+            </button>
+          </div>
+
+          {variant === 'base64' && (
+            <label className="flex items-center gap-1.5 text-xs font-mono text-slate-700 dark:text-slate-300 cursor-pointer ml-2">
+              <input
+                type="checkbox"
+                checked={urlSafe}
+                onChange={(e) => setUrlSafe(e.target.checked)}
+                className="accent-amber-500 rounded"
+              />
+              <span>URL-Safe Variant (+ / → - _)</span>
+            </label>
+          )}
         </div>
 
-        {mode.startsWith('base64') && (
-          <label className="flex items-center gap-2 cursor-pointer text-xs font-mono text-slate-300">
-            <input
-              type="checkbox"
-              checked={urlSafe}
-              onChange={(e) => setUrlSafe(e.target.checked)}
-              className="w-4 h-4 rounded bg-slate-900 border-slate-700 text-cyan-500 focus:ring-cyan-500"
-            />
-            <span>URL-Safe Variant (- _)</span>
-          </label>
-        )}
+        {/* Encode / Decode Action Toggle */}
+        <div className="flex items-center gap-2">
+          <button
+            onClick={() => setMode(mode === 'encode' ? 'decode' : 'encode')}
+            className="inline-flex items-center gap-2 px-3 py-1.5 rounded-lg text-xs font-bold bg-amber-500/10 text-amber-700 dark:text-amber-300 border border-amber-500/30 hover:bg-amber-500/20 transition"
+          >
+            <ArrowRightLeft className="w-3.5 h-3.5" />
+            <span>Mode: {mode.toUpperCase()}</span>
+          </button>
+        </div>
       </div>
 
-      {/* Editor Inputs */}
+      {/* Input / Output Workspace */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        {/* Input Column */}
         <div className="space-y-2">
           <div className="flex items-center justify-between">
-            <label className="text-xs font-bold text-slate-300 uppercase tracking-wider font-mono flex items-center gap-2">
-              <FileCode className="w-4 h-4 text-cyan-400" />
-              Input Text / Source String
+            <label className="text-xs font-bold text-slate-700 dark:text-slate-300 uppercase tracking-wider font-mono flex items-center gap-2">
+              <Binary className="w-4 h-4 text-amber-600 dark:text-amber-400" />
+              Input Text String
             </label>
-            <span className="text-[11px] font-mono text-slate-500">
-              {inputText.length} chars
-            </span>
+            <label className="inline-flex items-center gap-1 text-[11px] font-mono text-cyan-600 dark:text-cyan-400 hover:underline cursor-pointer">
+              <Upload className="w-3 h-3" />
+              <span>Convert File to Base64</span>
+              <input type="file" onChange={handleFileUpload} className="hidden" />
+            </label>
           </div>
 
           <textarea
             value={inputText}
             onChange={(e) => {
               setInputText(e.target.value);
-              setFileDataUrl(null);
+              setFilePreview(null);
             }}
-            placeholder="Type or paste text string here..."
-            className="w-full h-72 p-4 rounded-xl bg-slate-950 border border-slate-800 text-xs font-mono text-slate-100 placeholder-slate-600 focus:border-cyan-500 outline-none resize-none leading-relaxed"
+            placeholder={`Paste text or Base64 string to ${mode}...`}
+            className="w-full h-72 p-4 rounded-xl bg-slate-900 dark:bg-slate-950 border border-slate-700 dark:border-slate-800 text-xs font-mono text-amber-300 placeholder-slate-500 focus:border-amber-500 focus:ring-1 focus:ring-amber-500 outline-none resize-none leading-relaxed shadow-inner"
           />
 
           <ErrorAlert message={error} />
         </div>
 
+        {/* Output Column */}
         <div className="space-y-2">
           <div className="flex items-center justify-between">
-            <label className="text-xs font-bold text-slate-300 uppercase tracking-wider font-mono flex items-center gap-2">
-              <ArrowRightLeft className="w-4 h-4 text-emerald-400" />
-              Converted Result Output
+            <label className="text-xs font-bold text-amber-600 dark:text-amber-400 uppercase tracking-wider font-mono flex items-center gap-2">
+              <Sparkles className="w-4 h-4 text-amber-600 dark:text-amber-400" />
+              Result ({mode.toUpperCase()})
             </label>
             <CopyButton textToCopy={outputText} />
           </div>
 
-          <pre className="w-full h-72 p-4 rounded-xl bg-slate-950 border border-slate-800 text-xs font-mono text-cyan-300 overflow-auto leading-relaxed whitespace-pre-wrap break-all">
-            <code>{outputText || '// Encoded/Decoded string will appear here'}</code>
+          <pre className="w-full h-72 p-4 rounded-xl bg-slate-900 dark:bg-slate-950 border border-slate-700 dark:border-slate-800 overflow-auto text-xs font-mono text-amber-300 dark:text-slate-200 leading-relaxed shadow-inner">
+            <code>{outputText || '// Result will appear here'}</code>
           </pre>
         </div>
       </div>
 
-      {/* AdSlot Output */}
-      <AdSlotOutput />
-
-      {/* Drag and Drop Binary File to Base64 Converter */}
-      <div className="p-5 rounded-xl bg-slate-950 border border-slate-800 space-y-4">
-        <div className="flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            <Upload className="w-5 h-5 text-indigo-400" />
-            <h3 className="text-xs font-bold text-slate-200 uppercase font-mono tracking-wider">
-              File to Base64 Converter with Live Preview
-            </h3>
-          </div>
-          <span className="text-[11px] font-mono text-slate-500">100% Browser FileReader</span>
-        </div>
-
-        <label className="flex flex-col items-center justify-center p-6 border-2 border-dashed border-slate-800 hover:border-cyan-500/60 rounded-xl cursor-pointer bg-slate-900/40 hover:bg-slate-900/80 transition group">
-          <Upload className="w-8 h-8 text-slate-500 group-hover:text-cyan-400 transition mb-2" />
-          <span className="text-xs font-semibold text-slate-300 group-hover:text-cyan-300">
-            Click or drag a file to convert to Base64 Data URL
-          </span>
-          <span className="text-[10px] text-slate-500 mt-1">
-            (Images, PNG, JPG, WebP, SVG, Documents)
-          </span>
-          <input
-            type="file"
-            onChange={handleFileUpload}
-            className="hidden"
-          />
-        </label>
-
-        {fileDataUrl && (
-          <div className="p-4 rounded-xl bg-slate-900 border border-slate-800 flex flex-col md:flex-row items-center gap-4">
-            {fileDataUrl.startsWith('data:image/') && (
-              <img
-                src={fileDataUrl}
-                alt="File Preview"
-                className="w-24 h-24 object-contain rounded-lg border border-slate-800 bg-slate-950"
-              />
-            )}
-            <div className="flex-1 space-y-1">
-              <div className="text-xs font-semibold text-slate-200">{fileName}</div>
-              <div className="text-[11px] text-emerald-400 font-mono flex items-center gap-1">
-                <CheckCircle className="w-3.5 h-3.5" />
-                Converted to Base64 Data URL
+      {/* File Preview Card */}
+      {filePreview && (
+        <div className="p-4 rounded-xl bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 flex items-center justify-between gap-4 shadow-sm transition-colors">
+          <div className="flex items-center gap-3">
+            <div className="p-2.5 rounded-lg bg-amber-500/10 text-amber-600 dark:text-amber-400">
+              <Link2 className="w-5 h-5" />
+            </div>
+            <div>
+              <div className="text-xs font-bold text-slate-900 dark:text-slate-200">{filePreview.name}</div>
+              <div className="text-[11px] text-slate-500 font-mono">
+                {filePreview.mime} • {(filePreview.size / 1024).toFixed(1)} KB
               </div>
             </div>
-            <CopyButton textToCopy={fileDataUrl} label="Copy Data URL" />
           </div>
-        )}
-      </div>
+          {filePreview.mime.startsWith('image/') && (
+            <img
+              src={filePreview.dataUrl}
+              alt="Uploaded Preview"
+              className="w-12 h-12 rounded border border-slate-300 dark:border-slate-800 object-cover"
+            />
+          )}
+        </div>
+      )}
+
+      {/* AdSlot Output */}
+      <AdSlotOutput />
     </div>
   );
 };

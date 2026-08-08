@@ -156,7 +156,7 @@ export const JwtDecoder: React.FC = () => {
   return (
     <div className="space-y-6">
       {/* Top Controls & Sample Loading */}
-      <div className="flex flex-wrap items-center justify-between gap-3 p-3 rounded-xl bg-slate-950/80 border border-slate-800">
+      <div className="flex flex-wrap items-center justify-between gap-3 p-3 rounded-xl bg-slate-100 dark:bg-slate-950/80 border border-slate-200 dark:border-slate-800 transition-colors">
         <div className="flex items-center gap-2">
           <button
             onClick={() => {
@@ -164,9 +164,9 @@ export const JwtDecoder: React.FC = () => {
               setSecretKey(SAMPLE_SECRET);
               setVerifyStatus('idle');
             }}
-            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold bg-slate-800 hover:bg-slate-700 text-cyan-300 border border-slate-700 transition"
+            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold bg-white dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-cyan-700 dark:text-cyan-300 border border-slate-300 dark:border-slate-700 transition"
           >
-            <Sparkles className="w-3.5 h-3.5 text-cyan-400" />
+            <Sparkles className="w-3.5 h-3.5 text-cyan-600 dark:text-cyan-400" />
             Load Sample Token
           </button>
           <button
@@ -175,7 +175,7 @@ export const JwtDecoder: React.FC = () => {
               setSecretKey('');
               setVerifyStatus('idle');
             }}
-            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold bg-slate-800 hover:bg-slate-700 text-slate-400 hover:text-red-400 border border-slate-700 transition"
+            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold bg-white dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-600 dark:text-slate-400 hover:text-red-600 dark:hover:text-red-400 border border-slate-300 dark:border-slate-700 transition"
           >
             Clear
           </button>
@@ -186,8 +186,8 @@ export const JwtDecoder: React.FC = () => {
           <div
             className={`flex items-center gap-2 px-3 py-1 rounded-full text-xs font-mono font-semibold border ${
               expClaimInfo.isExpired
-                ? 'bg-red-500/10 text-red-400 border-red-500/30'
-                : 'bg-emerald-500/10 text-emerald-400 border-emerald-500/30'
+                ? 'bg-red-500/10 text-red-700 dark:text-red-400 border-red-500/30'
+                : 'bg-emerald-500/10 text-emerald-700 dark:text-emerald-400 border-emerald-500/30'
             }`}
           >
             <Clock className="w-3.5 h-3.5" />
@@ -199,8 +199,8 @@ export const JwtDecoder: React.FC = () => {
       {/* Raw Token Input Field */}
       <div className="space-y-2">
         <div className="flex items-center justify-between">
-          <label className="text-xs font-bold text-slate-300 uppercase tracking-wider font-mono flex items-center gap-2">
-            <KeyRound className="w-4 h-4 text-cyan-400" />
+          <label className="text-xs font-bold text-slate-700 dark:text-slate-300 uppercase tracking-wider font-mono flex items-center gap-2">
+            <KeyRound className="w-4 h-4 text-cyan-600 dark:text-cyan-400" />
             Encoded JWT Token String
           </label>
           <CopyButton textToCopy={jwtInput} />
@@ -212,7 +212,7 @@ export const JwtDecoder: React.FC = () => {
             setVerifyStatus('idle');
           }}
           placeholder="Paste encoded JWT string (header.payload.signature)..."
-          className="w-full h-28 p-3 rounded-xl bg-slate-950 border border-slate-800 text-xs font-mono text-cyan-300 placeholder-slate-600 focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500 outline-none resize-none leading-relaxed"
+          className="w-full h-28 p-3 rounded-xl bg-slate-900 dark:bg-slate-950 border border-slate-700 dark:border-slate-800 text-xs font-mono text-cyan-300 dark:text-cyan-300 placeholder-slate-500 focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500 outline-none resize-none leading-relaxed shadow-inner"
         />
         <ErrorAlert message={decodeError} title="JWT Decoding Error" />
       </div>
@@ -222,12 +222,12 @@ export const JwtDecoder: React.FC = () => {
         {/* Header Decoded */}
         <div className="space-y-2">
           <div className="flex items-center justify-between">
-            <span className="text-xs font-bold text-red-400 uppercase tracking-wider font-mono">
+            <span className="text-xs font-bold text-red-600 dark:text-red-400 uppercase tracking-wider font-mono">
               Header (Algorithm & Token Type)
             </span>
             <CopyButton textToCopy={headerStr} />
           </div>
-          <pre className="p-4 rounded-xl bg-slate-950 border border-red-900/30 text-xs font-mono text-red-300 overflow-auto h-52 leading-relaxed">
+          <pre className="p-4 rounded-xl bg-slate-900 dark:bg-slate-950 border border-red-200 dark:border-red-900/30 text-xs font-mono text-red-300 dark:text-red-300 overflow-auto h-52 leading-relaxed shadow-inner">
             <code>{headerStr || '// Header claims will appear here'}</code>
           </pre>
         </div>
@@ -235,12 +235,12 @@ export const JwtDecoder: React.FC = () => {
         {/* Payload Decoded */}
         <div className="space-y-2">
           <div className="flex items-center justify-between">
-            <span className="text-xs font-bold text-purple-400 uppercase tracking-wider font-mono">
+            <span className="text-xs font-bold text-purple-600 dark:text-purple-400 uppercase tracking-wider font-mono">
               Payload (Claims & Data)
             </span>
             <CopyButton textToCopy={payloadStr} />
           </div>
-          <pre className="p-4 rounded-xl bg-slate-950 border border-purple-900/30 text-xs font-mono text-purple-300 overflow-auto h-52 leading-relaxed">
+          <pre className="p-4 rounded-xl bg-slate-900 dark:bg-slate-950 border border-purple-200 dark:border-purple-900/30 text-xs font-mono text-purple-300 dark:text-purple-300 overflow-auto h-52 leading-relaxed shadow-inner">
             <code>{payloadStr || '// Payload claims will appear here'}</code>
           </pre>
         </div>
@@ -250,21 +250,21 @@ export const JwtDecoder: React.FC = () => {
       <AdSlotOutput />
 
       {/* Web Crypto Signature Verification Box */}
-      <div className="p-5 rounded-2xl bg-slate-950 border border-slate-800 space-y-4">
+      <div className="p-5 rounded-2xl bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 space-y-4 shadow-sm transition-colors">
         <div className="flex items-center justify-between flex-wrap gap-2">
           <div className="flex items-center gap-2">
-            <ShieldCheck className="w-5 h-5 text-cyan-400" />
-            <h3 className="text-sm font-bold text-slate-200 uppercase font-mono tracking-wider">
+            <ShieldCheck className="w-5 h-5 text-cyan-600 dark:text-cyan-400" />
+            <h3 className="text-sm font-bold text-slate-900 dark:text-slate-200 uppercase font-mono tracking-wider">
               Web Crypto HMAC Signature Verification
             </h3>
           </div>
-          <span className="text-[11px] font-mono text-emerald-400 bg-emerald-500/10 border border-emerald-500/20 px-2.5 py-0.5 rounded-full">
+          <span className="text-[11px] font-mono text-emerald-700 dark:text-emerald-400 bg-emerald-500/10 border border-emerald-500/20 px-2.5 py-0.5 rounded-full">
             Executed 100% Client-Side
           </span>
         </div>
 
-        <p className="text-xs text-slate-400 leading-relaxed">
-          Enter your secret key below to verify the HMAC signature locally using the browser native Web Crypto API (<code className="text-cyan-300 font-mono">crypto.subtle</code>). Secret keys are never transmitted to any server.
+        <p className="text-xs text-slate-600 dark:text-slate-400 leading-relaxed">
+          Enter your secret key below to verify the HMAC signature locally using the browser native Web Crypto API (<code className="text-cyan-700 dark:text-cyan-300 font-mono">crypto.subtle</code>). Secret keys are never transmitted to any server.
         </p>
 
         <div className="flex flex-col sm:flex-row items-center gap-3">
@@ -277,7 +277,7 @@ export const JwtDecoder: React.FC = () => {
                 setSecretKey(e.target.value);
                 setVerifyStatus('idle');
               }}
-              className="w-full px-4 py-2 rounded-xl bg-slate-900 border border-slate-800 focus:border-cyan-500 text-xs font-mono text-slate-200 outline-none"
+              className="w-full px-4 py-2 rounded-xl bg-slate-100 dark:bg-slate-900 border border-slate-300 dark:border-slate-800 focus:border-cyan-500 text-xs font-mono text-slate-900 dark:text-slate-200 outline-none"
             />
           </div>
 
@@ -302,23 +302,23 @@ export const JwtDecoder: React.FC = () => {
           <div
             className={`p-3.5 rounded-xl text-xs font-mono flex items-center gap-3 ${
               verifyStatus === 'valid'
-                ? 'bg-emerald-950/40 border border-emerald-800 text-emerald-300'
-                : 'bg-red-950/40 border border-red-800 text-red-300'
+                ? 'bg-emerald-500/10 border border-emerald-500/30 text-emerald-800 dark:text-emerald-300'
+                : 'bg-red-500/10 border border-red-500/30 text-red-800 dark:text-red-300'
             }`}
           >
             {verifyStatus === 'valid' ? (
               <>
-                <CheckCircle2 className="w-5 h-5 text-emerald-400 shrink-0" />
+                <CheckCircle2 className="w-5 h-5 text-emerald-600 dark:text-emerald-400 shrink-0" />
                 <div>
-                  <strong className="block text-emerald-200">Signature Verified!</strong>
-                  <span>The HMAC signature is cryptographic match with the provided secret key.</span>
+                  <strong className="block text-emerald-900 dark:text-emerald-200">Signature Verified!</strong>
+                  <span>The HMAC signature is a cryptographic match with the provided secret key.</span>
                 </div>
               </>
             ) : (
               <>
-                <XCircle className="w-5 h-5 text-red-400 shrink-0" />
+                <XCircle className="w-5 h-5 text-red-600 dark:text-red-400 shrink-0" />
                 <div>
-                  <strong className="block text-red-200">Invalid Signature!</strong>
+                  <strong className="block text-red-900 dark:text-red-200">Invalid Signature!</strong>
                   <span>The signature does not match the header, payload, or secret key.</span>
                 </div>
               </>

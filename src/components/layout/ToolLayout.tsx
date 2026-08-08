@@ -15,20 +15,20 @@ interface ToolLayoutProps {
 
 export const ToolLayout: React.FC<ToolLayoutProps> = ({ tool, children }) => {
   return (
-    <div className="min-h-screen flex flex-col bg-slate-950 text-slate-100 selection:bg-cyan-500/30 selection:text-cyan-200">
+    <div className="min-h-screen flex flex-col bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-100 selection:bg-cyan-500/30 selection:text-cyan-700 dark:selection:text-cyan-200 transition-colors">
       <Header />
 
       <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6">
         {/* Breadcrumb Header Navigation */}
-        <nav className="flex items-center gap-2 text-xs text-slate-400 mb-4 font-mono">
-          <Link to="/" className="hover:text-cyan-400 flex items-center gap-1 transition-colors">
+        <nav className="flex items-center gap-2 text-xs text-slate-500 dark:text-slate-400 mb-4 font-mono">
+          <Link to="/" className="hover:text-cyan-600 dark:hover:text-cyan-400 flex items-center gap-1 transition-colors">
             <Home className="w-3.5 h-3.5" />
             <span>Home</span>
           </Link>
-          <ChevronRight className="w-3 h-3 text-slate-600" />
-          <span className="text-slate-500">Tools</span>
-          <ChevronRight className="w-3 h-3 text-slate-600" />
-          <span className="text-cyan-400 font-semibold truncate">{tool.name}</span>
+          <ChevronRight className="w-3 h-3 text-slate-400 dark:text-slate-600" />
+          <span className="text-slate-400 dark:text-slate-500">Tools</span>
+          <ChevronRight className="w-3 h-3 text-slate-400 dark:text-slate-600" />
+          <span className="text-cyan-600 dark:text-cyan-400 font-semibold truncate">{tool.name}</span>
         </nav>
 
         {/* Main Content Layout with Sidebar */}
@@ -36,24 +36,24 @@ export const ToolLayout: React.FC<ToolLayoutProps> = ({ tool, children }) => {
           {/* Main Tool Column */}
           <div className="flex-1 w-full min-w-0">
             {/* Tool Title & Badges Header (Page H1 Title) */}
-            <div className="mb-4 pb-4 border-b border-slate-800/80">
+            <div className="mb-4 pb-4 border-b border-slate-200 dark:border-slate-800/80">
               <div className="flex flex-wrap items-center justify-between gap-3 mb-2">
-                <h1 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-white">
+                <h1 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-slate-900 dark:text-white">
                   {tool.name}
                 </h1>
                 <div className="flex items-center gap-2">
                   {tool.badge && (
-                    <span className="px-2.5 py-1 rounded-full text-xs font-mono font-semibold bg-cyan-500/10 text-cyan-300 border border-cyan-500/30">
+                    <span className="px-2.5 py-1 rounded-full text-xs font-mono font-semibold bg-cyan-500/10 text-cyan-700 dark:text-cyan-300 border border-cyan-500/30">
                       {tool.badge}
                     </span>
                   )}
-                  <span className="px-2.5 py-1 rounded-full text-xs font-mono bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 flex items-center gap-1">
+                  <span className="px-2.5 py-1 rounded-full text-xs font-mono bg-emerald-500/10 text-emerald-700 dark:text-emerald-400 border border-emerald-500/20 flex items-center gap-1">
                     <Shield className="w-3 h-3" />
                     100% Client-Side
                   </span>
                 </div>
               </div>
-              <p className="text-sm text-slate-400 leading-relaxed max-w-3xl">
+              <p className="text-sm text-slate-600 dark:text-slate-400 leading-relaxed max-w-3xl">
                 {tool.shortDescription}
               </p>
             </div>
@@ -62,7 +62,7 @@ export const ToolLayout: React.FC<ToolLayoutProps> = ({ tool, children }) => {
             <AdSlotHeader />
 
             {/* Interactive Tool Interface Component */}
-            <div className="p-4 sm:p-6 rounded-2xl bg-slate-900/60 border border-slate-800/80 backdrop-blur-sm shadow-2xl my-4">
+            <div className="p-4 sm:p-6 rounded-2xl bg-white dark:bg-slate-900/60 border border-slate-200 dark:border-slate-800/80 backdrop-blur-sm shadow-xl dark:shadow-2xl my-4 transition-colors">
               {children}
             </div>
 
