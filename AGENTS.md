@@ -26,7 +26,7 @@
 - **Routing**: `react-router-dom` v6 (Hub & Spoke URL model)
 - **Icons**: `lucide-react`
 - **Utilities**: `sql-formatter`, native browser Web Crypto API (`crypto.subtle`)
-- **Hosting Target**: Cloudflare Pages (Static SPA mode configured via `public/_redirects`)
+- **Hosting Target**: Cloudflare Pages / Workers Assets (`wrangler.jsonc` with `"not_found_handling": "single-page-application"`)
 
 ### Core Architecture Guarantee
 1. **100% Client-Side Processing**: Zero network API dispatches to backend servers. All data processing occurs locally in browser memory for sub-50ms speed and absolute privacy.
@@ -39,7 +39,7 @@
 ```
 Developer_&_Tech_Suite/
 ├── public/
-│   ├── _redirects                  # Cloudflare Pages SPA redirect rule (/* /index.html 200)
+│   ├── _redirects                  # Managed Cloudflare Pages redirect file
 │   └── favicon.svg
 ├── src/
 │   ├── components/
@@ -79,6 +79,7 @@ Developer_&_Tech_Suite/
 │   └── index.css                   # Tailwind v4 import (@import "tailwindcss";)
 ├── package.json
 ├── vite.config.ts
+├── wrangler.jsonc                  # Cloudflare Workers/Pages assets SPA configuration
 ├── AGENTS.md                       # This file (Agent Instructions & Change Log)
 └── README.md
 ```
@@ -199,3 +200,14 @@ Ensure build compiles cleanly with zero TypeScript errors.
   - Added remote origin `https://github.com/hakro10/files_tools.git`.
   - Executed initial commit (`45 files changed, 5936 insertions(+)`) and pushed to `origin/main`.
 - **Verification**: Remote branch `main` successfully tracking `origin/main`.
+
+---
+
+### Entry 010 - Cloudflare Deployment Error Fix (Wrangler Code 100324 Infinite Loop)
+- **Date**: 2026-08-08
+- **Summary**: Fixed Cloudflare API deployment failure `Invalid _redirects configuration: Line 1: Infinite loop detected in this rule [code: 100324]`.
+- **Root Cause**: Cloudflare Workers Assets / Pages redirect engine normalizes `/index.html` to `/`. The rule `/* /index.html 200` in `public/_redirects` triggered an infinite redirect loop detection error during `npx wrangler deploy`.
+- **Fix Applied**:
+  1. Created explicit root `wrangler.jsonc` configuring `"assets": { "directory": "./dist", "not_found_handling": "single-page-application" }`.
+  2. Removed conflicting `/* /index.html 200` line from `public/_redirects` to let Cloudflare Assets handle SPA routing natively without API errors.
+- **Verification**: `npm run build` compiled cleanly (`✓ built in 312ms`).
