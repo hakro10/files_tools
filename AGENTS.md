@@ -284,6 +284,17 @@ Ensure build compiles cleanly with zero TypeScript errors.
 - **Fix Applied**: Updated `vite.config.ts` with `publicDir: 'public'`. Verified root output files `dist/sitemap.xml` (2,814 bytes) and `dist/robots.txt` (68 bytes).
 - **Verification**: Executed `npm run build` (`✓ built in 270ms`).
 
+---
+
+### Entry 018 - Cloudflare Worker Entry Script (`src/worker.ts`) & `run_worker_first` Sitemap Bypass
+- **Date**: 2026-08-10
+- **Summary**: Created `src/worker.ts` Cloudflare Worker entry script and updated `wrangler.jsonc` with `"run_worker_first": ["/sitemap.xml", "/robots.txt"]` to bypass SPA `index.html` fallback for static XML/text assets.
+- **Fix Applied**:
+  1. Created `src/worker.ts` with explicit route handlers fetching `/sitemap.xml` and `/robots.txt` directly from `env.ASSETS` with `application/xml` and `text/plain` headers.
+  2. Configured `"main": "src/worker.ts"` and `"run_worker_first": ["/sitemap.xml", "/robots.txt"]` in `wrangler.jsonc`.
+- **Verification**: Executed `npm run build` (`✓ built in 255ms`).
+
+
 
 
 
