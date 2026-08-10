@@ -268,6 +268,15 @@ Ensure build compiles cleanly with zero TypeScript errors.
   3. Verified Vite build assets in `dist/sitemap.xml` (2814 bytes) and `dist/robots.txt` (68 bytes).
 - **Verification**: Executed `npm run build` (`✓ built in 261ms`).
 
+---
+
+### Entry 016 - Removal of Redundant `_redirects` and `.htaccess` for Cloudflare Workers Assets
+- **Date**: 2026-08-10
+- **Summary**: Removed `public/_redirects` and `public/.htaccess` files to prevent URL rewrite conflicts with static files like `sitemap.xml` and `robots.txt`.
+- **Root Cause & Fix**: Cloudflare Workers Assets manages SPA routing natively via `"assets": { "not_found_handling": "single-page-application" }` in `wrangler.jsonc`. Redundant `_redirects` and `.htaccess` rules were removed.
+- **Verification**: Executed `npm run build` (`✓ built in 257ms`). Verified `dist/sitemap.xml` (2814 bytes) and `dist/robots.txt` (68 bytes) are served cleanly at root level.
+
+
 
 
 
