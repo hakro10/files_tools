@@ -276,6 +276,15 @@ Ensure build compiles cleanly with zero TypeScript errors.
 - **Root Cause & Fix**: Cloudflare Workers Assets manages SPA routing natively via `"assets": { "not_found_handling": "single-page-application" }` in `wrangler.jsonc`. Redundant `_redirects` and `.htaccess` rules were removed.
 - **Verification**: Executed `npm run build` (`✓ built in 257ms`). Verified `dist/sitemap.xml` (2814 bytes) and `dist/robots.txt` (68 bytes) are served cleanly at root level.
 
+---
+
+### Entry 017 - Vite Config Explicit `publicDir` Static Asset Copying
+- **Date**: 2026-08-10
+- **Summary**: Added explicit `publicDir: 'public'` to `vite.config.ts` to ensure Vite copies static assets (`sitemap.xml`, `robots.txt`) directly to the root of `dist/` build output.
+- **Fix Applied**: Updated `vite.config.ts` with `publicDir: 'public'`. Verified root output files `dist/sitemap.xml` (2,814 bytes) and `dist/robots.txt` (68 bytes).
+- **Verification**: Executed `npm run build` (`✓ built in 270ms`).
+
+
 
 
 
