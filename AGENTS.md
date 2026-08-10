@@ -240,3 +240,13 @@ Ensure build compiles cleanly with zero TypeScript errors.
   4. **Legal Pages & SPA Routing**: Added URL aliases for `/privacy-policy`, `/terms-of-service`, `/about-us`, `/contact-us`. Created `public/sitemap.xml`, `public/robots.txt`, `public/.htaccess`, and `public/_redirects`.
 - **Verification**: Executed `npm run build` (`✓ built in 265ms` with 0 TypeScript compilation errors).
 
+---
+
+### Entry 013 - Cloudflare Wrangler Deploy Error Fix (Wrangler Code 100324)
+- **Date**: 2026-08-10
+- **Summary**: Fixed Cloudflare deployment failure `Invalid _redirects configuration: Line 1: Infinite loop detected in this rule [code: 100324]`.
+- **Root Cause**: Cloudflare Workers Assets handles SPA routing natively via `"assets": { "not_found_handling": "single-page-application" }` in `wrangler.jsonc`. Specifying `/* /index.html 200` in `public/_redirects` triggers an infinite loop detection error because Cloudflare normalizes `/index.html` to `/`.
+- **Fix Applied**: Cleared the conflicting rule from `public/_redirects` to let `wrangler.jsonc` manage Cloudflare SPA routing natively.
+- **Verification**: Executed `npm run build` (`✓ built in 268ms`).
+
+
