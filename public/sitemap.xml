@@ -1,85 +1,100 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <!-- Homepage -->
+  <!-- Domain Homepage -->
   <url>
     <loc>https://filestools.net/</loc>
+    <lastmod>2026-08-10</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
 
-  <!-- File Tools -->
+  <!-- File Converter Tools -->
   <url>
     <loc>https://filestools.net/tools/jpg-to-pdf</loc>
+    <lastmod>2026-08-10</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>0.9</priority>
+    <priority>0.8</priority>
   </url>
   <url>
     <loc>https://filestools.net/tools/png-to-pdf</loc>
+    <lastmod>2026-08-10</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>0.9</priority>
+    <priority>0.8</priority>
   </url>
   <url>
     <loc>https://filestools.net/tools/pdf-to-jpg</loc>
+    <lastmod>2026-08-10</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>0.9</priority>
+    <priority>0.8</priority>
   </url>
   <url>
     <loc>https://filestools.net/tools/image-compressor</loc>
+    <lastmod>2026-08-10</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>0.9</priority>
+    <priority>0.8</priority>
   </url>
 
   <!-- Developer Micro-Tools -->
   <url>
     <loc>https://filestools.net/tools/json-formatter</loc>
+    <lastmod>2026-08-10</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://filestools.net/tools/jwt-decoder</loc>
+    <lastmod>2026-08-10</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://filestools.net/tools/sql-formatter</loc>
+    <lastmod>2026-08-10</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://filestools.net/tools/regex-tester</loc>
+    <lastmod>2026-08-10</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://filestools.net/tools/base64-url-encoder</loc>
+    <lastmod>2026-08-10</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://filestools.net/tools/flexbox-grid-playground</loc>
+    <lastmod>2026-08-10</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
 
-  <!-- Compliance Pages -->
+  <!-- Compliance & Legal Pages -->
   <url>
     <loc>https://filestools.net/privacy-policy</loc>
+    <lastmod>2026-08-10</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
+    <priority>0.3</priority>
   </url>
   <url>
     <loc>https://filestools.net/terms-of-service</loc>
+    <lastmod>2026-08-10</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
+    <priority>0.3</priority>
   </url>
   <url>
     <loc>https://filestools.net/about-us</loc>
+    <lastmod>2026-08-10</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
+    <priority>0.3</priority>
   </url>
   <url>
     <loc>https://filestools.net/contact-us</loc>
+    <lastmod>2026-08-10</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
+    <priority>0.3</priority>
   </url>
 </urlset>

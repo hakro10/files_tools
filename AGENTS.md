@@ -257,5 +257,17 @@ Ensure build compiles cleanly with zero TypeScript errors.
 - **Fix Applied**: Updated `wrangler.jsonc` to ensure Cloudflare static asset router serves `index.html` with HTTP status 200 OK for deep links like `/tools/pdf-to-jpg`.
 - **Verification**: Executed `npm run build` (`✓ built in 291ms`).
 
+---
+
+### Entry 015 - Technical SEO Sitemap & Robots.txt Verification
+- **Date**: 2026-08-10
+- **Summary**: Generated and verified `public/sitemap.xml` and `public/robots.txt` for full search engine indexability of `filestools.net`.
+- **Fix Applied**:
+  1. Updated `public/sitemap.xml` with current `<lastmod>` (2026-08-10), `<changefreq>` tags, and priority weights (1.0 for homepage, 0.8 for all 10 file/developer tools, 0.3 for legal pages).
+  2. Created `public/robots.txt` pointing crawlers to `https://filestools.net/sitemap.xml`.
+  3. Verified Vite build assets in `dist/sitemap.xml` (2814 bytes) and `dist/robots.txt` (68 bytes).
+- **Verification**: Executed `npm run build` (`✓ built in 261ms`).
+
+
 
 
