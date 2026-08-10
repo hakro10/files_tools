@@ -227,3 +227,16 @@ Ensure build compiles cleanly with zero TypeScript errors.
   3. Added Sun/Moon theme toggle button in `Header.tsx`.
   4. Refactored `index.css`, `ToolLayout.tsx`, `Header.tsx`, `Sidebar.tsx`, `Footer.tsx`, `HomePage.tsx`, all 6 tool components (`JsonFormatter`, `JwtDecoder`, `SqlFormatter`, `RegexTester`, `Base64Encoder`, `FlexGridPlayground`), and policy pages (`PrivacyPolicyPage`, `TermsPage`, `AboutPage`, `ContactPage`) with Tailwind CSS `dark:` variant classes and clean slate-50 light backgrounds.
 - **Verification**: `npm run build` compiled cleanly (`✓ built in 194ms`).
+
+---
+
+### Entry 012 - FilesTools.net Expansion & Google AdSense Policy Compliance Audit
+- **Date**: 2026-08-10
+- **Summary**: Audited platform for `filestools.net` deployment, added 4 client-side file processing tools (`jpg-to-pdf`, `png-to-pdf`, `pdf-to-jpg`, `image-compressor`), expanded programmatic SEO content to 600–800+ words per tool, generated `sitemap.xml` / `robots.txt`, and added `.htaccess` SPA fallback.
+- **Fix & Feature Applied**:
+  1. **Client-Side File Tools**: Installed `pdf-lib` and `jszip`. Created `JpgToPdf.tsx`, `PngToPdf.tsx`, `PdfToJpg.tsx`, and `ImageCompressor.tsx` for 100% in-browser conversion and compression.
+  2. **600+ Word Programmatic Content**: Updated `toolsData.ts` with structured 600–800+ word static HTML text per tool covering step-by-step instructions, in-browser privacy guarantees, technical format specs, and FAQs.
+  3. **AdSense Compliance**: Enforced Leaderboard Ad placement (`#ad-slot-header`) directly below H1 title and directly above tool workspace; Output Ad placement (`#ad-slot-output`) directly below conversion results; added muted `ADVERTISEMENT` labels with 16px+ vertical safety margins.
+  4. **Legal Pages & SPA Routing**: Added URL aliases for `/privacy-policy`, `/terms-of-service`, `/about-us`, `/contact-us`. Created `public/sitemap.xml`, `public/robots.txt`, `public/.htaccess`, and `public/_redirects`.
+- **Verification**: Executed `npm run build` (`✓ built in 265ms` with 0 TypeScript compilation errors).
+

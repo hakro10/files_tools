@@ -15,10 +15,17 @@ export const App: React.FC = () => {
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/tools/:slug" element={<ToolPage />} />
+
+          {/* Compliance & Policy Pages with URL Aliases */}
           <Route path="/privacy" element={<PrivacyPolicyPage />} />
+          <Route path="/privacy-policy" element={<PrivacyPolicyPage />} />
           <Route path="/terms" element={<TermsPage />} />
+          <Route path="/terms-of-service" element={<TermsPage />} />
           <Route path="/about" element={<AboutPage />} />
+          <Route path="/about-us" element={<AboutPage />} />
           <Route path="/contact" element={<ContactPage />} />
+          <Route path="/contact-us" element={<ContactPage />} />
+
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
       </BrowserRouter>
