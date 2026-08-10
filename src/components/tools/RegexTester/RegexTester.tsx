@@ -78,7 +78,7 @@ export const RegexTester: React.FC = () => {
 
     try {
       const regex = new RegExp(pattern, flags);
-      return testText.replace(regex, (m) => `<mark class="bg-purple-500/30 text-purple-900 dark:text-purple-200 border border-purple-500/50 px-1 py-0.5 rounded">${m}</mark>`);
+      return testText.replace(regex, (m) => `<mark class="bg-purple-200 dark:bg-purple-500/30 text-purple-900 dark:text-purple-200 border border-purple-400 dark:border-purple-500/50 px-1 py-0.5 rounded font-bold">${m}</mark>`);
     } catch {
       return testText;
     }
@@ -158,7 +158,7 @@ export const RegexTester: React.FC = () => {
             value={testText}
             onChange={(e) => setTestText(e.target.value)}
             placeholder="Paste text sample to evaluate against regular expression..."
-            className="w-full h-64 p-4 rounded-xl bg-slate-900 dark:bg-slate-950 border border-slate-700 dark:border-slate-800 text-xs font-mono text-purple-300 placeholder-slate-500 focus:border-purple-500 focus:ring-1 focus:ring-purple-500 outline-none resize-none leading-relaxed shadow-inner"
+            className="w-full h-64 p-4 rounded-xl bg-slate-100 dark:bg-slate-950 border border-slate-300 dark:border-slate-800 text-xs font-mono text-purple-950 dark:text-purple-300 placeholder-slate-400 dark:placeholder-slate-500 focus:border-purple-500 focus:ring-1 focus:ring-purple-500 outline-none resize-none leading-relaxed shadow-inner transition-colors"
           />
         </div>
 
@@ -178,7 +178,7 @@ export const RegexTester: React.FC = () => {
 
           <div
             dangerouslySetInnerHTML={{ __html: highlightedHtml }}
-            className="w-full h-64 p-4 rounded-xl bg-slate-900 dark:bg-slate-950 border border-slate-700 dark:border-slate-800 text-xs font-mono text-slate-200 overflow-auto whitespace-pre-wrap leading-relaxed shadow-inner"
+            className="w-full h-64 p-4 rounded-xl bg-slate-100 dark:bg-slate-950 border border-slate-300 dark:border-slate-800 text-xs font-mono text-slate-900 dark:text-slate-200 overflow-auto whitespace-pre-wrap leading-relaxed shadow-inner transition-colors"
           />
         </div>
       </div>

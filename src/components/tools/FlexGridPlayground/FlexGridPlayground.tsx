@@ -231,7 +231,7 @@ export const FlexGridPlayground: React.FC = () => {
           Interactive Visual Canvas
         </label>
 
-        <div className="w-full min-h-[300px] p-6 rounded-2xl bg-slate-900 dark:bg-slate-950 border border-slate-700 dark:border-slate-800 shadow-inner overflow-auto transition-all">
+        <div className="w-full min-h-[300px] p-6 rounded-2xl bg-slate-100 dark:bg-slate-950 border border-slate-300 dark:border-slate-800 shadow-inner overflow-auto transition-colors">
           <div
             style={
               displayMode === 'flex'
@@ -249,12 +249,12 @@ export const FlexGridPlayground: React.FC = () => {
                     gap: `${gap}px`
                   }
             }
-            className="w-full min-h-[250px] p-4 rounded-xl border border-dashed border-slate-700"
+            className="w-full min-h-[250px] p-4 rounded-xl border border-dashed border-slate-300 dark:border-slate-700"
           >
             {Array.from({ length: itemCount }).map((_, idx) => (
               <div
                 key={idx}
-                className="p-4 rounded-xl bg-gradient-to-br from-pink-500/20 to-purple-500/20 border border-pink-500/40 text-pink-300 font-mono font-bold text-sm flex items-center justify-center shadow-lg min-w-[70px] min-h-[70px] transition-transform hover:scale-105"
+                className="p-4 rounded-xl bg-gradient-to-br from-pink-500/20 to-purple-500/20 border border-pink-400 dark:border-pink-500/40 text-pink-900 dark:text-pink-300 font-mono font-bold text-sm flex items-center justify-center shadow-lg min-w-[70px] min-h-[70px] transition-transform hover:scale-105"
               >
                 Box {idx + 1}
               </div>
@@ -274,7 +274,7 @@ export const FlexGridPlayground: React.FC = () => {
             </span>
             <CopyButton textToCopy={generatedCss} />
           </div>
-          <pre className="p-4 rounded-xl bg-slate-900 dark:bg-slate-950 border border-slate-700 dark:border-slate-800 text-xs font-mono text-pink-300 dark:text-slate-200 overflow-auto leading-relaxed shadow-inner">
+          <pre className="p-4 rounded-xl bg-slate-100 dark:bg-slate-950 border border-slate-300 dark:border-slate-800 text-xs font-mono text-pink-900 dark:text-slate-200 overflow-auto leading-relaxed shadow-inner transition-colors">
             <code>{generatedCss}</code>
           </pre>
         </div>
@@ -288,7 +288,7 @@ export const FlexGridPlayground: React.FC = () => {
             </span>
             <CopyButton textToCopy={generatedTailwind} />
           </div>
-          <pre className="p-4 rounded-xl bg-slate-900 dark:bg-slate-950 border border-slate-700 dark:border-slate-800 text-xs font-mono text-cyan-300 dark:text-slate-200 overflow-auto leading-relaxed shadow-inner">
+          <pre className="p-4 rounded-xl bg-slate-100 dark:bg-slate-950 border border-slate-300 dark:border-slate-800 text-xs font-mono text-cyan-900 dark:text-slate-200 overflow-auto leading-relaxed shadow-inner transition-colors">
             <code>{generatedTailwind}</code>
           </pre>
         </div>

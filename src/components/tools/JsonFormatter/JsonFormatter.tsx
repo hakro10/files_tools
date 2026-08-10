@@ -55,8 +55,8 @@ const JsonTreeNode: React.FC<JsonTreeNodeProps> = ({ data, name, isLast = true, 
   const getTypeColor = (val: any) => {
     if (val === null) return 'text-amber-600 dark:text-amber-400 font-semibold';
     if (typeof val === 'boolean') return 'text-purple-600 dark:text-purple-400 font-semibold';
-    if (typeof val === 'number') return 'text-cyan-600 dark:text-cyan-400 font-mono';
-    if (typeof val === 'string') return 'text-emerald-600 dark:text-emerald-400';
+    if (typeof val === 'number') return 'text-cyan-700 dark:text-cyan-400 font-mono';
+    if (typeof val === 'string') return 'text-emerald-700 dark:text-emerald-400';
     return 'text-slate-800 dark:text-slate-200';
   };
 
@@ -72,8 +72,8 @@ const JsonTreeNode: React.FC<JsonTreeNodeProps> = ({ data, name, isLast = true, 
   if (!isObject) {
     if (!matchesSearch(name, data)) return null;
     return (
-      <div className="py-0.5 font-mono text-xs flex items-center gap-1.5 hover:bg-slate-200/50 dark:hover:bg-slate-800/40 px-1.5 rounded">
-        {name && <span className="text-slate-500 dark:text-slate-400 font-medium">"{name}":</span>}
+      <div className="py-0.5 font-mono text-xs flex items-center gap-1.5 hover:bg-slate-200 dark:hover:bg-slate-800/40 px-1.5 rounded">
+        {name && <span className="text-slate-600 dark:text-slate-400 font-medium">"{name}":</span>}
         <span className={getTypeColor(data)}>
           {typeof data === 'string' ? `"${data}"` : String(data)}
         </span>
@@ -89,7 +89,7 @@ const JsonTreeNode: React.FC<JsonTreeNodeProps> = ({ data, name, isLast = true, 
     <div className="py-0.5 font-mono text-xs">
       <div
         onClick={() => setCollapsed(!collapsed)}
-        className="flex items-center gap-1 cursor-pointer hover:bg-slate-200/60 dark:hover:bg-slate-800/60 px-1.5 py-0.5 rounded select-none group"
+        className="flex items-center gap-1 cursor-pointer hover:bg-slate-200 dark:hover:bg-slate-800/60 px-1.5 py-0.5 rounded select-none group"
       >
         <span className="text-slate-400 dark:text-slate-500 group-hover:text-cyan-600 dark:group-hover:text-cyan-400">
           {collapsed ? <ChevronRight className="w-3.5 h-3.5" /> : <ChevronDown className="w-3.5 h-3.5" />}
@@ -97,7 +97,7 @@ const JsonTreeNode: React.FC<JsonTreeNodeProps> = ({ data, name, isLast = true, 
         {name && <span className="text-slate-800 dark:text-slate-300 font-semibold">"{name}": </span>}
         <span className="text-slate-500 font-bold">{isArray ? '[' : '{'}</span>
         {collapsed && (
-          <span className="text-slate-500 dark:text-slate-400 text-[11px] px-1.5 py-0.2 bg-slate-200 dark:bg-slate-800 rounded font-sans">
+          <span className="text-slate-600 dark:text-slate-400 text-[11px] px-1.5 py-0.2 bg-slate-200 dark:bg-slate-800 rounded font-sans">
             {itemCount} {itemCount === 1 ? 'item' : 'items'}
           </span>
         )}
@@ -265,7 +265,7 @@ export const JsonFormatter: React.FC = () => {
             value={inputJson}
             onChange={(e) => setInputJson(e.target.value)}
             placeholder="Paste your raw JSON data here..."
-            className="w-full h-[420px] p-4 rounded-xl bg-slate-900 dark:bg-slate-950 border border-slate-700 dark:border-slate-800 text-xs font-mono text-slate-100 placeholder-slate-500 focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500 outline-none resize-none leading-relaxed shadow-inner"
+            className="w-full h-[420px] p-4 rounded-xl bg-slate-100 dark:bg-slate-950 border border-slate-300 dark:border-slate-800 text-xs font-mono text-slate-900 dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-500 focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500 outline-none resize-none leading-relaxed shadow-inner transition-colors"
           />
 
           <ErrorAlert message={error} />
@@ -300,20 +300,20 @@ export const JsonFormatter: React.FC = () => {
             </div>
           </div>
 
-          <div className="w-full h-[420px] rounded-xl bg-slate-900 dark:bg-slate-950 border border-slate-700 dark:border-slate-800 overflow-hidden flex flex-col shadow-inner">
+          <div className="w-full h-[420px] rounded-xl bg-slate-100 dark:bg-slate-950 border border-slate-300 dark:border-slate-800 overflow-hidden flex flex-col shadow-inner transition-colors">
             {viewMode === 'tree' ? (
               <div className="flex flex-col h-full">
-                <div className="p-2.5 border-b border-slate-800 bg-slate-950/60 flex items-center gap-2">
-                  <Search className="w-3.5 h-3.5 text-slate-500" />
+                <div className="p-2.5 border-b border-slate-300 dark:border-slate-800 bg-slate-200/80 dark:bg-slate-950/60 flex items-center gap-2">
+                  <Search className="w-3.5 h-3.5 text-slate-400 dark:text-slate-500" />
                   <input
                     type="text"
                     placeholder="Search tree nodes or values..."
                     value={treeSearch}
                     onChange={(e) => setTreeSearch(e.target.value)}
-                    className="bg-transparent text-xs text-slate-200 placeholder-slate-500 outline-none w-full font-mono"
+                    className="bg-transparent text-xs text-slate-900 dark:text-slate-200 placeholder-slate-400 dark:placeholder-slate-500 outline-none w-full font-mono"
                   />
                 </div>
-                <div className="p-4 overflow-auto flex-1 font-mono text-slate-200">
+                <div className="p-4 overflow-auto flex-1 font-mono text-slate-900 dark:text-slate-200">
                   {parsedJson !== null ? (
                     <JsonTreeNode data={parsedJson} searchTerm={treeSearch} />
                   ) : (
@@ -324,7 +324,7 @@ export const JsonFormatter: React.FC = () => {
                 </div>
               </div>
             ) : (
-              <pre className="p-4 overflow-auto text-xs font-mono text-cyan-300 dark:text-slate-200 h-full leading-relaxed">
+              <pre className="p-4 overflow-auto text-xs font-mono text-slate-900 dark:text-slate-200 h-full leading-relaxed">
                 <code>{outputFormatted || '// Result will appear here'}</code>
               </pre>
             )}

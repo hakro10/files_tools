@@ -157,7 +157,7 @@ export const SqlFormatter: React.FC = () => {
             value={sqlInput}
             onChange={(e) => setSqlInput(e.target.value)}
             placeholder="Paste your SQL SELECT, INSERT, UPDATE, or CREATE query here..."
-            className="w-full h-96 p-4 rounded-xl bg-slate-900 dark:bg-slate-950 border border-slate-700 dark:border-slate-800 text-xs font-mono text-indigo-300 dark:text-indigo-300 placeholder-slate-500 focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 outline-none resize-none leading-relaxed shadow-inner"
+            className="w-full h-96 p-4 rounded-xl bg-slate-100 dark:bg-slate-950 border border-slate-300 dark:border-slate-800 text-xs font-mono text-indigo-950 dark:text-indigo-300 placeholder-slate-400 dark:placeholder-slate-500 focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 outline-none resize-none leading-relaxed shadow-inner transition-colors"
           />
 
           <ErrorAlert message={error} title="SQL Parsing Warning" />
@@ -184,7 +184,7 @@ export const SqlFormatter: React.FC = () => {
             </div>
           </div>
 
-          <pre className="w-full h-96 p-4 rounded-xl bg-slate-900 dark:bg-slate-950 border border-slate-700 dark:border-slate-800 overflow-auto text-xs font-mono text-indigo-300 dark:text-slate-200 leading-relaxed shadow-inner">
+          <pre className="w-full h-96 p-4 rounded-xl bg-slate-100 dark:bg-slate-950 border border-slate-300 dark:border-slate-800 overflow-auto text-xs font-mono text-indigo-950 dark:text-slate-200 leading-relaxed shadow-inner transition-colors">
             <code>{formattedSql || '// Formatted SQL will appear here'}</code>
           </pre>
         </div>

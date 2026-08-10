@@ -212,7 +212,7 @@ export const JwtDecoder: React.FC = () => {
             setVerifyStatus('idle');
           }}
           placeholder="Paste encoded JWT string (header.payload.signature)..."
-          className="w-full h-28 p-3 rounded-xl bg-slate-900 dark:bg-slate-950 border border-slate-700 dark:border-slate-800 text-xs font-mono text-cyan-300 dark:text-cyan-300 placeholder-slate-500 focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500 outline-none resize-none leading-relaxed shadow-inner"
+          className="w-full h-28 p-3 rounded-xl bg-slate-100 dark:bg-slate-950 border border-slate-300 dark:border-slate-800 text-xs font-mono text-cyan-900 dark:text-cyan-300 placeholder-slate-400 dark:placeholder-slate-500 focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500 outline-none resize-none leading-relaxed shadow-inner transition-colors"
         />
         <ErrorAlert message={decodeError} title="JWT Decoding Error" />
       </div>
@@ -227,7 +227,7 @@ export const JwtDecoder: React.FC = () => {
             </span>
             <CopyButton textToCopy={headerStr} />
           </div>
-          <pre className="p-4 rounded-xl bg-slate-900 dark:bg-slate-950 border border-red-200 dark:border-red-900/30 text-xs font-mono text-red-300 dark:text-red-300 overflow-auto h-52 leading-relaxed shadow-inner">
+          <pre className="p-4 rounded-xl bg-slate-100 dark:bg-slate-950 border border-red-200 dark:border-red-900/30 text-xs font-mono text-red-800 dark:text-red-300 overflow-auto h-52 leading-relaxed shadow-inner transition-colors">
             <code>{headerStr || '// Header claims will appear here'}</code>
           </pre>
         </div>
@@ -240,7 +240,7 @@ export const JwtDecoder: React.FC = () => {
             </span>
             <CopyButton textToCopy={payloadStr} />
           </div>
-          <pre className="p-4 rounded-xl bg-slate-900 dark:bg-slate-950 border border-purple-200 dark:border-purple-900/30 text-xs font-mono text-purple-300 dark:text-purple-300 overflow-auto h-52 leading-relaxed shadow-inner">
+          <pre className="p-4 rounded-xl bg-slate-100 dark:bg-slate-950 border border-purple-200 dark:border-purple-900/30 text-xs font-mono text-purple-800 dark:text-purple-300 overflow-auto h-52 leading-relaxed shadow-inner transition-colors">
             <code>{payloadStr || '// Payload claims will appear here'}</code>
           </pre>
         </div>
@@ -277,7 +277,7 @@ export const JwtDecoder: React.FC = () => {
                 setSecretKey(e.target.value);
                 setVerifyStatus('idle');
               }}
-              className="w-full px-4 py-2 rounded-xl bg-slate-100 dark:bg-slate-900 border border-slate-300 dark:border-slate-800 focus:border-cyan-500 text-xs font-mono text-slate-900 dark:text-slate-200 outline-none"
+              className="w-full px-4 py-2 rounded-xl bg-slate-100 dark:bg-slate-900 border border-slate-300 dark:border-slate-800 focus:border-cyan-500 text-xs font-mono text-slate-900 dark:text-slate-200 outline-none transition-colors"
             />
           </div>
 

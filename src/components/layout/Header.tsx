@@ -108,17 +108,24 @@ export const Header: React.FC = () => {
           <button
             onClick={toggleTheme}
             type="button"
-            className="p-2 rounded-xl bg-slate-100 dark:bg-slate-900 hover:bg-slate-200 dark:hover:bg-slate-800 border border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-300 transition-all flex items-center gap-1.5"
-            title={`Switch to ${theme === 'dark' ? 'light' : 'dark'} mode`}
+            className="p-2 px-3 rounded-xl bg-slate-100 dark:bg-slate-900 hover:bg-slate-200 dark:hover:bg-slate-800 border border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-300 transition-all flex items-center gap-1.5 shadow-sm"
+            title={`Current theme: ${theme}. Click to switch to ${theme === 'dark' ? 'light' : 'dark'} mode.`}
           >
             {theme === 'dark' ? (
-              <Sun className="w-4 h-4 text-amber-400 hover:rotate-45 transition-transform" />
+              <>
+                <Sun className="w-4 h-4 text-amber-400 hover:rotate-45 transition-transform" />
+                <span className="text-[11px] font-mono font-semibold hidden sm:inline-block text-amber-300">
+                  Light
+                </span>
+              </>
             ) : (
-              <Moon className="w-4 h-4 text-indigo-600 hover:-rotate-12 transition-transform" />
+              <>
+                <Moon className="w-4 h-4 text-indigo-600 hover:-rotate-12 transition-transform" />
+                <span className="text-[11px] font-mono font-semibold hidden sm:inline-block text-indigo-600">
+                  Dark
+                </span>
+              </>
             )}
-            <span className="text-[11px] font-mono font-medium hidden sm:inline-block">
-              {theme === 'dark' ? 'Light' : 'Dark'}
-            </span>
           </button>
         </div>
       </div>

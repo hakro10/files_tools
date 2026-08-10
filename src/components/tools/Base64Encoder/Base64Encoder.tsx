@@ -157,7 +157,7 @@ export const Base64Encoder: React.FC = () => {
               setFilePreview(null);
             }}
             placeholder={`Paste text or Base64 string to ${mode}...`}
-            className="w-full h-72 p-4 rounded-xl bg-slate-900 dark:bg-slate-950 border border-slate-700 dark:border-slate-800 text-xs font-mono text-amber-300 placeholder-slate-500 focus:border-amber-500 focus:ring-1 focus:ring-amber-500 outline-none resize-none leading-relaxed shadow-inner"
+            className="w-full h-72 p-4 rounded-xl bg-slate-100 dark:bg-slate-950 border border-slate-300 dark:border-slate-800 text-xs font-mono text-amber-900 dark:text-amber-300 placeholder-slate-400 dark:placeholder-slate-500 focus:border-amber-500 focus:ring-1 focus:ring-amber-500 outline-none resize-none leading-relaxed shadow-inner transition-colors"
           />
 
           <ErrorAlert message={error} />
@@ -173,7 +173,7 @@ export const Base64Encoder: React.FC = () => {
             <CopyButton textToCopy={outputText} />
           </div>
 
-          <pre className="w-full h-72 p-4 rounded-xl bg-slate-900 dark:bg-slate-950 border border-slate-700 dark:border-slate-800 overflow-auto text-xs font-mono text-amber-300 dark:text-slate-200 leading-relaxed shadow-inner">
+          <pre className="w-full h-72 p-4 rounded-xl bg-slate-100 dark:bg-slate-950 border border-slate-300 dark:border-slate-800 overflow-auto text-xs font-mono text-amber-900 dark:text-slate-200 leading-relaxed shadow-inner transition-colors">
             <code>{outputText || '// Result will appear here'}</code>
           </pre>
         </div>
