@@ -294,6 +294,18 @@ Ensure build compiles cleanly with zero TypeScript errors.
   2. Configured `"main": "src/worker.ts"` and `"run_worker_first": ["/sitemap.xml", "/robots.txt"]` in `wrangler.jsonc`.
 - **Verification**: Executed `npm run build` (`✓ built in 255ms`).
 
+---
+
+### Entry 019 - Google AdSense Production `ads.txt` Creation & Route Handler
+- **Date**: 2026-08-10
+- **Summary**: Created production `public/ads.txt` containing `google.com, pub-2116463006242210, DIRECT, f08c47fec0942fa0` and updated `src/worker.ts` / `wrangler.jsonc` for static asset delivery.
+- **Fix Applied**:
+  1. Created `public/ads.txt` with publisher authorization entry `google.com, pub-2116463006242210, DIRECT, f08c47fec0942fa0`.
+  2. Updated `src/worker.ts` to serve `/ads.txt` with `Content-Type: text/plain; charset=utf-8` header.
+  3. Added `"/ads.txt"` to `run_worker_first` in `wrangler.jsonc`.
+- **Verification**: Executed `npm run build` (`✓ built in 271ms`). Verified root output file `dist/ads.txt` (59 bytes).
+
+
 
 
 

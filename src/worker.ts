@@ -8,7 +8,7 @@ export default {
   async fetch(request: Request, env: Env): Promise<Response> {
     const url = new URL(request.url);
 
-    // 1. Explicitly serve sitemap.xml and robots.txt as raw static assets with exact content-types
+    // 1. Explicitly serve sitemap.xml, robots.txt, and ads.txt as raw static assets
     if (url.pathname === '/sitemap.xml') {
       const assetResponse = await env.ASSETS.fetch(request);
       const headers = new Headers(assetResponse.headers);
@@ -20,7 +20,7 @@ export default {
       });
     }
 
-    if (url.pathname === '/robots.txt') {
+    if (url.pathname === '/robots.txt' || url.pathname === '/ads.txt') {
       const assetResponse = await env.ASSETS.fetch(request);
       const headers = new Headers(assetResponse.headers);
       headers.set('Content-Type', 'text/plain; charset=utf-8');
