@@ -249,4 +249,13 @@ Ensure build compiles cleanly with zero TypeScript errors.
 - **Fix Applied**: Cleared the conflicting rule from `public/_redirects` to let `wrangler.jsonc` manage Cloudflare SPA routing natively.
 - **Verification**: Executed `npm run build` (`✓ built in 268ms`).
 
+---
+
+### Entry 014 - Cloudflare Pages SPA Routing `wrangler.jsonc` Verification
+- **Date**: 2026-08-10
+- **Summary**: Verified `wrangler.jsonc` configuration with `"assets": { "directory": "./dist", "not_found_handling": "single-page-application" }` and updated `compatibility_date` to `2026-08-10`.
+- **Fix Applied**: Updated `wrangler.jsonc` to ensure Cloudflare static asset router serves `index.html` with HTTP status 200 OK for deep links like `/tools/pdf-to-jpg`.
+- **Verification**: Executed `npm run build` (`✓ built in 291ms`).
+
+
 
