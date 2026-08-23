@@ -1,7 +1,8 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useParams, Navigate } from 'react-router-dom';
 import { ToolLayout } from '../components/layout/ToolLayout';
 import { TOOLS } from '../data/toolsData';
+import { useSeo } from '../hooks/useSeo';
 
 // Import Developer Tools
 import { JsonFormatter } from '../components/tools/JsonFormatter/JsonFormatter';
@@ -22,22 +23,30 @@ export const ToolPage: React.FC = () => {
 
   const tool = TOOLS.find((t) => t.slug === slug);
 
-  // Dynamic SEO Page Title & Meta Description update
-  useEffect(() => {
-    if (tool) {
-      document.title = `${tool.name} - FilesTools.net (100% Client-Side)`;
-      
-      const metaDescription = document.querySelector('meta[name="description"]');
-      if (metaDescription) {
-        metaDescription.setAttribute('content', tool.shortDescription);
-      } else {
-        const meta = document.createElement('meta');
-        meta.name = 'description';
-        meta.content = tool.shortDescription;
-        document.head.appendChild(meta);
-      }
-    }
-  }, [tool]);
+  const jsonLd = tool ? {
+    '@context': 'https://schema.org',
+    '@type': 'WebApplication',
+    'name': tool.name,
+    'url': `https://filestools.net/tools/${tool.slug}`,
+    'description': tool.shortDescription,
+    'applicationCategory': tool.category === 'File Tools' ? 'MultimediaApplication' : 'DeveloperApplication',
+    'operatingSystem': 'Any (Web Browser)',
+    'offers': {
+      '@type': 'Offer',
+      'price': '0',
+      'priceCurrency': 'USD'
+    },
+    'featureList': tool.features
+  } : undefined;
+
+  // Dynamic SEO Page Title, Canonical URL, OpenGraph, & Schema.org JSON-LD structured data
+  useSeo({
+    title: tool ? `${tool.name} - FilesTools.net (100% Client-Side)` : 'FilesTools.net',
+    description: tool ? tool.shortDescription : 'Privacy-First Developer Toolkit and File Converter.',
+    canonicalUrl: tool ? `https://filestools.net/tools/${tool.slug}` : 'https://filestools.net/',
+    keywords: tool ? tool.keywords : undefined,
+    jsonLd
+  });
 
   if (!tool) {
     return <Navigate to="/" replace />;

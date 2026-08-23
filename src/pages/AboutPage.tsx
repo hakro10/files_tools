@@ -2,8 +2,15 @@ import React from 'react';
 import { Header } from '../components/layout/Header';
 import { Footer } from '../components/layout/Footer';
 import { Terminal, Shield, Zap, Lock, Code2 } from 'lucide-react';
+import { useSeo } from '../hooks/useSeo';
 
 export const AboutPage: React.FC = () => {
+  useSeo({
+    title: 'About Us | FilesTools.net',
+    description: 'Learn about FilesTools.net, our mission for 100% client-side data privacy, and how we build zero-server-upload file converters and developer tools.',
+    canonicalUrl: 'https://filestools.net/about-us'
+  });
+
   return (
     <div className="min-h-screen flex flex-col bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-100 transition-colors">
       <Header />

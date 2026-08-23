@@ -2,10 +2,17 @@ import React, { useState } from 'react';
 import { Header } from '../components/layout/Header';
 import { Footer } from '../components/layout/Footer';
 import { Mail, Send, CheckCircle2 } from 'lucide-react';
+import { useSeo } from '../hooks/useSeo';
 
 export const ContactPage: React.FC = () => {
   const [submitted, setSubmitted] = useState(false);
   const [formData, setFormData] = useState({ name: '', email: '', subject: 'Feedback', message: '' });
+
+  useSeo({
+    title: 'Contact Us | FilesTools.net',
+    description: 'Get in touch with FilesTools.net engineering team for support, tool requests, bug reports, and feedback.',
+    canonicalUrl: 'https://filestools.net/contact-us'
+  });
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();

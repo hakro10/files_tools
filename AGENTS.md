@@ -305,6 +305,24 @@ Ensure build compiles cleanly with zero TypeScript errors.
   3. Added `"/ads.txt"` to `run_worker_first` in `wrangler.jsonc`.
 - **Verification**: Executed `npm run build` (`✓ built in 271ms`). Verified root output file `dist/ads.txt` (59 bytes).
 
+---
+
+### Entry 020 - Google Search Console Indexing Fix (Canonical Tags, HTTP->HTTPS 301, Edge HTMLRewriter Meta Injection)
+- **Date**: 2026-08-23
+- **Summary**: Resolved Google Search Console indexing issues ("Duplicate without user-selected canonical" and "Discovered - currently not indexed") by implementing edge HTTP 301 redirects, route alias redirects, explicit `<link rel="canonical">` links on all pages, OpenGraph / Twitter tags, Schema.org JSON-LD structured data, and Cloudflare Worker `HTMLRewriter` edge SEO meta injection.
+- **Root Cause & Diagnostic Findings**:
+  1. Google crawled `http://filestools.net/contact-us` (HTTP) with no user-declared canonical tag, triggering duplicate URL warnings without user-selected canonical.
+  2. Duplicate route aliases (`/privacy`, `/terms`, `/about`, `/contact`) served 200 OK responses with identical content rather than 301 redirecting to canonical URLs.
+  3. Client-side SPA HTML lacked pre-rendered static title/description/canonical tags for individual tools and structured data on the initial HTML byte, delaying crawl queue execution for discovered URLs.
+- **Exact File Changes Applied**:
+  1. `src/hooks/useSeo.ts`: Created centralized dynamic SEO synchronization hook updating `document.title`, `<link rel="canonical">`, `<meta name="description">`, OpenGraph, Twitter Cards, and Schema.org JSON-LD structured data.
+  2. `src/pages/ToolPage.tsx`, `HomePage.tsx`, `PrivacyPolicyPage.tsx`, `TermsPage.tsx`, `AboutPage.tsx`, `ContactPage.tsx`: Integrated `useSeo` hook across all pages with explicit canonical URLs and Schema.org `WebApplication`/`WebSite` metadata.
+  3. `src/App.tsx`: Updated duplicate route aliases (`/privacy`, `/terms`, `/about`, `/contact`) to perform explicit client-side redirects `<Navigate to="..." replace />` to canonical paths.
+  4. `src/worker.ts`: Implemented HTTP-to-HTTPS 301 redirection, duplicate alias 301 redirection, and native Cloudflare Workers `HTMLRewriter` to inject exact canonical tags, title, description, and JSON-LD schema into raw initial HTML streams for search engine crawlers.
+  5. `index.html`: Added canonical tag fallback and complete OpenGraph/Twitter default tags.
+- **Verification Conducted**: Executed `npm run build` (`✓ built in 274ms` with 0 TypeScript compilation errors). Verified `dist/index.html` builds with canonical and OpenGraph headers.
+
+
 
 
 

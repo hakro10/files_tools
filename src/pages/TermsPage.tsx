@@ -2,8 +2,15 @@ import React from 'react';
 import { Header } from '../components/layout/Header';
 import { Footer } from '../components/layout/Footer';
 import { FileText, ShieldAlert, CheckCircle2 } from 'lucide-react';
+import { useSeo } from '../hooks/useSeo';
 
 export const TermsPage: React.FC = () => {
+  useSeo({
+    title: 'Terms of Service | FilesTools.net',
+    description: 'Terms of Service and Acceptable Use Policy for FilesTools.net client-side file conversion and developer utility platform.',
+    canonicalUrl: 'https://filestools.net/terms-of-service'
+  });
+
   return (
     <div className="min-h-screen flex flex-col bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-100 transition-colors">
       <Header />

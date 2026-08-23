@@ -2,8 +2,15 @@ import React from 'react';
 import { Header } from '../components/layout/Header';
 import { Footer } from '../components/layout/Footer';
 import { ShieldCheck, Lock, Eye, Server } from 'lucide-react';
+import { useSeo } from '../hooks/useSeo';
 
 export const PrivacyPolicyPage: React.FC = () => {
+  useSeo({
+    title: 'Privacy Policy | FilesTools.net',
+    description: 'Privacy Policy for FilesTools.net. Learn about our 100% client-side data processing architecture, zero server logs, and Google AdSense cookie disclosures.',
+    canonicalUrl: 'https://filestools.net/privacy-policy'
+  });
+
   return (
     <div className="min-h-screen flex flex-col bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-100 transition-colors">
       <Header />

@@ -227,3 +227,98 @@ Ensure build compiles cleanly with zero TypeScript errors.
   3. Added Sun/Moon theme toggle button in `Header.tsx`.
   4. Refactored `index.css`, `ToolLayout.tsx`, `Header.tsx`, `Sidebar.tsx`, `Footer.tsx`, `HomePage.tsx`, all 6 tool components (`JsonFormatter`, `JwtDecoder`, `SqlFormatter`, `RegexTester`, `Base64Encoder`, `FlexGridPlayground`), and policy pages (`PrivacyPolicyPage`, `TermsPage`, `AboutPage`, `ContactPage`) with Tailwind CSS `dark:` variant classes and clean slate-50 light backgrounds.
 - **Verification**: `npm run build` compiled cleanly (`✓ built in 194ms`).
+
+---
+
+### Entry 012 - FilesTools.net Expansion & Google AdSense Policy Compliance Audit
+- **Date**: 2026-08-10
+- **Summary**: Audited platform for `filestools.net` deployment, added 4 client-side file processing tools (`jpg-to-pdf`, `png-to-pdf`, `pdf-to-jpg`, `image-compressor`), expanded programmatic SEO content to 600–800+ words per tool, generated `sitemap.xml` / `robots.txt`, and added `.htaccess` SPA fallback.
+- **Fix & Feature Applied**:
+  1. **Client-Side File Tools**: Installed `pdf-lib` and `jszip`. Created `JpgToPdf.tsx`, `PngToPdf.tsx`, `PdfToJpg.tsx`, and `ImageCompressor.tsx` for 100% in-browser conversion and compression.
+  2. **600+ Word Programmatic Content**: Updated `toolsData.ts` with structured 600–800+ word static HTML text per tool covering step-by-step instructions, in-browser privacy guarantees, technical format specs, and FAQs.
+  3. **AdSense Compliance**: Enforced Leaderboard Ad placement (`#ad-slot-header`) directly below H1 title and directly above tool workspace; Output Ad placement (`#ad-slot-output`) directly below conversion results; added muted `ADVERTISEMENT` labels with 16px+ vertical safety margins.
+  4. **Legal Pages & SPA Routing**: Added URL aliases for `/privacy-policy`, `/terms-of-service`, `/about-us`, `/contact-us`. Created `public/sitemap.xml`, `public/robots.txt`, `public/.htaccess`, and `public/_redirects`.
+- **Verification**: Executed `npm run build` (`✓ built in 265ms` with 0 TypeScript compilation errors).
+
+---
+
+### Entry 013 - Cloudflare Wrangler Deploy Error Fix (Wrangler Code 100324)
+- **Date**: 2026-08-10
+- **Summary**: Fixed Cloudflare deployment failure `Invalid _redirects configuration: Line 1: Infinite loop detected in this rule [code: 100324]`.
+- **Root Cause**: Cloudflare Workers Assets handles SPA routing natively via `"assets": { "not_found_handling": "single-page-application" }` in `wrangler.jsonc`. Specifying `/* /index.html 200` in `public/_redirects` triggers an infinite loop detection error because Cloudflare normalizes `/index.html` to `/`.
+- **Fix Applied**: Cleared the conflicting rule from `public/_redirects` to let `wrangler.jsonc` manage Cloudflare SPA routing natively.
+- **Verification**: Executed `npm run build` (`✓ built in 268ms`).
+
+---
+
+### Entry 014 - Cloudflare Pages SPA Routing `wrangler.jsonc` Verification
+- **Date**: 2026-08-10
+- **Summary**: Verified `wrangler.jsonc` configuration with `"assets": { "directory": "./dist", "not_found_handling": "single-page-application" }` and updated `compatibility_date` to `2026-08-10`.
+- **Fix Applied**: Updated `wrangler.jsonc` to ensure Cloudflare static asset router serves `index.html` with HTTP status 200 OK for deep links like `/tools/pdf-to-jpg`.
+- **Verification**: Executed `npm run build` (`✓ built in 291ms`).
+
+---
+
+### Entry 015 - Technical SEO Sitemap & Robots.txt Verification
+- **Date**: 2026-08-10
+- **Summary**: Generated and verified `public/sitemap.xml` and `public/robots.txt` for full search engine indexability of `filestools.net`.
+- **Fix Applied**:
+  1. Updated `public/sitemap.xml` with current `<lastmod>` (2026-08-10), `<changefreq>` tags, and priority weights (1.0 for homepage, 0.8 for all 10 file/developer tools, 0.3 for legal pages).
+  2. Created `public/robots.txt` pointing crawlers to `https://filestools.net/sitemap.xml`.
+  3. Verified Vite build assets in `dist/sitemap.xml` (2814 bytes) and `dist/robots.txt` (68 bytes).
+- **Verification**: Executed `npm run build` (`✓ built in 261ms`).
+
+---
+
+### Entry 016 - Removal of Redundant `_redirects` and `.htaccess` for Cloudflare Workers Assets
+- **Date**: 2026-08-10
+- **Summary**: Removed `public/_redirects` and `public/.htaccess` files to prevent URL rewrite conflicts with static files like `sitemap.xml` and `robots.txt`.
+- **Root Cause & Fix**: Cloudflare Workers Assets manages SPA routing natively via `"assets": { "not_found_handling": "single-page-application" }` in `wrangler.jsonc`. Redundant `_redirects` and `.htaccess` rules were removed.
+- **Verification**: Executed `npm run build` (`✓ built in 257ms`). Verified `dist/sitemap.xml` (2814 bytes) and `dist/robots.txt` (68 bytes) are served cleanly at root level.
+
+---
+
+### Entry 017 - Vite Config Explicit `publicDir` Static Asset Copying
+- **Date**: 2026-08-10
+- **Summary**: Added explicit `publicDir: 'public'` to `vite.config.ts` to ensure Vite copies static assets (`sitemap.xml`, `robots.txt`) directly to the root of `dist/` build output.
+- **Fix Applied**: Updated `vite.config.ts` with `publicDir: 'public'`. Verified root output files `dist/sitemap.xml` (2,814 bytes) and `dist/robots.txt` (68 bytes).
+- **Verification**: Executed `npm run build` (`✓ built in 270ms`).
+
+---
+
+### Entry 018 - Cloudflare Worker Entry Script (`src/worker.ts`) & `run_worker_first` Sitemap Bypass
+- **Date**: 2026-08-10
+- **Summary**: Created `src/worker.ts` Cloudflare Worker entry script and updated `wrangler.jsonc` with `"run_worker_first": ["/sitemap.xml", "/robots.txt"]` to bypass SPA `index.html` fallback for static XML/text assets.
+- **Fix Applied**:
+  1. Created `src/worker.ts` with explicit route handlers fetching `/sitemap.xml` and `/robots.txt` directly from `env.ASSETS` with `application/xml` and `text/plain` headers.
+  2. Configured `"main": "src/worker.ts"` and `"run_worker_first": ["/sitemap.xml", "/robots.txt"]` in `wrangler.jsonc`.
+- **Verification**: Executed `npm run build` (`✓ built in 255ms`).
+
+---
+
+### Entry 019 - Google AdSense Production `ads.txt` Creation & Route Handler
+- **Date**: 2026-08-10
+- **Summary**: Created production `public/ads.txt` containing `google.com, pub-2116463006242210, DIRECT, f08c47fec0942fa0` and updated `src/worker.ts` / `wrangler.jsonc` for static asset delivery.
+- **Fix Applied**:
+  1. Created `public/ads.txt` with publisher authorization entry `google.com, pub-2116463006242210, DIRECT, f08c47fec0942fa0`.
+  2. Updated `src/worker.ts` to serve `/ads.txt` with `Content-Type: text/plain; charset=utf-8` header.
+  3. Added `"/ads.txt"` to `run_worker_first` in `wrangler.jsonc`.
+- **Verification**: Executed `npm run build` (`✓ built in 271ms`). Verified root output file `dist/ads.txt` (59 bytes).
+
+---
+
+### Entry 020 - Google Search Console Indexing Fix (Canonical Tags, HTTP->HTTPS 301, Edge HTMLRewriter Meta Injection)
+- **Date**: 2026-08-23
+- **Summary**: Resolved Google Search Console indexing issues ("Duplicate without user-selected canonical" and "Discovered - currently not indexed") by implementing edge HTTP 301 redirects, route alias redirects, explicit `<link rel="canonical">` links on all pages, OpenGraph / Twitter tags, Schema.org JSON-LD structured data, and Cloudflare Worker `HTMLRewriter` edge SEO meta injection.
+- **Root Cause & Diagnostic Findings**:
+  1. Google crawled `http://filestools.net/contact-us` (HTTP) with no user-declared canonical tag, triggering duplicate URL warnings without user-selected canonical.
+  2. Duplicate route aliases (`/privacy`, `/terms`, `/about`, `/contact`) served 200 OK responses with identical content rather than 301 redirecting to canonical URLs.
+  3. Client-side SPA HTML lacked pre-rendered static title/description/canonical tags for individual tools and structured data on the initial HTML byte, delaying crawl queue execution for discovered URLs.
+- **Exact File Changes Applied**:
+  1. `src/hooks/useSeo.ts`: Created centralized dynamic SEO synchronization hook updating `document.title`, `<link rel="canonical">`, `<meta name="description">`, OpenGraph, Twitter Cards, and Schema.org JSON-LD structured data.
+  2. `src/pages/ToolPage.tsx`, `HomePage.tsx`, `PrivacyPolicyPage.tsx`, `TermsPage.tsx`, `AboutPage.tsx`, `ContactPage.tsx`: Integrated `useSeo` hook across all pages with explicit canonical URLs and Schema.org `WebApplication`/`WebSite` metadata.
+  3. `src/App.tsx`: Updated duplicate route aliases (`/privacy`, `/terms`, `/about`, `/contact`) to perform explicit client-side redirects `<Navigate to="..." replace />` to canonical paths.
+  4. `src/worker.ts`: Implemented HTTP-to-HTTPS 301 redirection, duplicate alias 301 redirection, and native Cloudflare Workers `HTMLRewriter` to inject exact canonical tags, title, description, and JSON-LD schema into raw initial HTML streams for search engine crawlers.
+  5. `index.html`: Added canonical tag fallback and complete OpenGraph/Twitter default tags.
+- **Verification Conducted**: Executed `npm run build` (`✓ built in 274ms` with 0 TypeScript compilation errors). Verified `dist/index.html` builds with canonical and OpenGraph headers.
+

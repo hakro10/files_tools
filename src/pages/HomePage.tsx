@@ -5,6 +5,7 @@ import { Footer } from '../components/layout/Footer';
 import { AdSlotHeader } from '../components/ads/AdSlotHeader';
 import { AdSlotInline } from '../components/ads/AdSlotInline';
 import { TOOLS } from '../data/toolsData';
+import { useSeo } from '../hooks/useSeo';
 import {
   Terminal,
   ShieldCheck,
@@ -37,6 +38,36 @@ const ICON_MAP: Record<string, React.ReactNode> = {
 };
 
 export const HomePage: React.FC = () => {
+  useSeo({
+    title: 'FilesTools.net | 100% Client-Side File Converters & Developer Tools',
+    description: 'Convert JPG/PNG to PDF, extract PDF to JPG, compress images, decode JWTs, and format JSON/SQL directly inside your browser memory. Zero server uploads.',
+    canonicalUrl: 'https://filestools.net/',
+    keywords: [
+      'file tools',
+      'jpg to pdf',
+      'png to pdf',
+      'pdf to jpg',
+      'image compressor',
+      'json formatter',
+      'jwt decoder',
+      'sql formatter',
+      'regex tester',
+      'base64 encoder',
+      'privacy-first developer tools'
+    ],
+    jsonLd: {
+      '@context': 'https://schema.org',
+      '@type': 'WebSite',
+      'name': 'FilesTools.net',
+      'url': 'https://filestools.net/',
+      'description': '100% client-side privacy-first file conversion and developer micro-tools platform.',
+      'potentialAction': {
+        '@type': 'SearchAction',
+        'target': 'https://filestools.net/?q={search_term_string}',
+        'query-input': 'required name=search_term_string'
+      }
+    }
+  });
   return (
     <div className="min-h-screen flex flex-col bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-100 transition-colors">
       <Header />
